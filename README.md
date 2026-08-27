@@ -11,7 +11,7 @@ real-world incidents: Log4Shell, the `event-stream` supply-chain compromise, the
 account takeover, and several well-known prototype-pollution and ReDoS CVEs.
 
 > Live demo: **[depgraph-1.onrender.com](https://depgraph-1.onrender.com)** (backend API: [depgraph-8giy.onrender.com](https://depgraph-8giy.onrender.com))
-> Screen recording: _add link here_
+> Screen recording: **[Google Drive](https://drive.google.com/file/d/1yyk2w4ZhetAQWsN1H3ZwGydRhJkI9VhY/view?usp=drive_link)**
 >
 > Note: both are on Render's free tier, which spins down after inactivity — the first request after
 > a period of no traffic can take up to ~50 seconds to wake back up.
