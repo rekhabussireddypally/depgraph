@@ -209,9 +209,35 @@ Neo4j Python driver — there is no string-concatenated Cypher anywhere in the c
 
 ## Screenshots
 
-_Add screenshots here after running the app against your seeded CognoDB instance —
-e.g. the package search/home page, a package detail page showing its dependency tree, the
-vulnerabilities list, a blast-radius result, and the graph-insights page._
+**Package search** — search across npm/PyPI/Maven, or jump in via a spotlighted example.
+
+![Home page](docs/screenshots/01-home.png)
+
+**Package detail** — dependencies, dependents, maintainers, and the full transitive dependency
+tree (`react-scripts`, depth 6, 15 distinct paths) from a single variable-length traversal query.
+
+![Package detail](docs/screenshots/02-package-detail.png)
+
+**Blast radius** — the headline query. For the `ua-parser-js` supply-chain compromise, 5 projects
+are exposed: one direct use and four reached transitively through `socket.io` / `react-scripts`,
+each annotated with its hop distance.
+
+![Blast radius](docs/screenshots/03-blast-radius.png)
+
+**Vulnerabilities** — every CVE/advisory in the graph, click through to its blast radius.
+
+![Vulnerabilities](docs/screenshots/04-vulnerabilities.png)
+
+**Graph insights — shortest path & cycle detection** — `shortestPath()` finds the 3-hop chain from
+`react-scripts` to `minimist`; the cycle-detection query confirms this dataset is a clean DAG.
+
+![Shortest path](docs/screenshots/05-shortest-path.png)
+
+**Graph insights — bus-factor risk** — maintainers of a single package, ranked by how many
+projects transitively depend on their work. `ua-parser-js`'s sole maintainer sits upstream of 5
+projects — exactly the kind of single-point-of-failure this view exists to surface.
+
+![Bus-factor risk](docs/screenshots/06-bus-factor.png)
 
 ## Deployment
 
