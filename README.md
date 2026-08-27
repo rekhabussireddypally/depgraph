@@ -10,8 +10,11 @@ a graph traversal by nature, and DepGraph answers it live against a real dataset
 real-world incidents: Log4Shell, the `event-stream` supply-chain compromise, the `ua-parser-js`
 account takeover, and several well-known prototype-pollution and ReDoS CVEs.
 
-> Live demo: _add your hosted URL here after deploying (see [Deployment](#deployment))_
+> Live demo: **[depgraph-1.onrender.com](https://depgraph-1.onrender.com)** (backend API: [depgraph-8giy.onrender.com](https://depgraph-8giy.onrender.com))
 > Screen recording: _add link here_
+>
+> Note: both are on Render's free tier, which spins down after inactivity — the first request after
+> a period of no traffic can take up to ~50 seconds to wake back up.
 
 ## Contents
 
@@ -241,15 +244,20 @@ projects — exactly the kind of single-point-of-failure this view exists to sur
 
 ## Deployment
 
-This repo has no hosting-specific config baked in — deploy it however you like. A simple free-tier
-path:
+This repo has no hosting-specific config baked in — deploy it however you like. This demo is
+deployed entirely on Render's free tier, both pieces from the same repo:
 
-- **Backend**: any Python host that runs a `uvicorn` process (Render, Railway, Fly.io). Set
-  `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`, and `CORS_ORIGINS` (your frontend's deployed URL) as
-  environment variables — never commit `.env`.
-- **Frontend**: any static host (Vercel, Netlify, Cloudflare Pages). Set `VITE_API_URL` to your
-  deployed backend URL as a build-time environment variable, then `npm run build` and deploy the
-  `dist/` folder.
+- **Backend** — a Render **Web Service**, root directory `backend`, build command
+  `pip install -r requirements.txt`, start command `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+  Python version is pinned via `backend/runtime.txt` (`pydantic-core` has no prebuilt wheel for the
+  newest Python releases yet). Environment variables: `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`,
+  and `CORS_ORIGINS` set to the frontend's deployed URL.
+- **Frontend** — a Render **Static Site**, root directory `frontend`, build command `npm run build`,
+  publish directory `dist`, with a `/* → /index.html` rewrite rule so client-side routes survive a
+  page refresh. Environment variable: `VITE_API_URL` set to the backend's deployed URL.
+
+Any other Python host (Railway, Fly.io) or static host (Vercel, Netlify, Cloudflare Pages) works
+the same way — just set the equivalent environment variables. Never commit `.env`.
 
 Keep the CognoDB instance running after deploying — the assignment asks for it to stay live in
 case the app needs to be tried against real data.
